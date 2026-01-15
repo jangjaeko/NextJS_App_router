@@ -8,7 +8,7 @@ export default async function Page({
   const { q } = await searchParams;
   return (
     <div>
-      <h1>Search Page: {q}</h1>
+      <h1>Search {q}</h1>
     </div>
   );
 }
