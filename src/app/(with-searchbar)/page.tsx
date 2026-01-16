@@ -1,21 +1,52 @@
 import BookItem from "@/components/book-item";
 import style from "./page.module.css";
 import books from "@/mock/books.json";
+import { BookData } from "@/types";
+
+async function AllBooks() {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`
+  );
+  if (!response.ok) {
+    return <div>failed to load books</div>;
+  }
+  const allBooks: BookData[] = await response.json();
+  return (
+    <div>
+      {allBooks.map((book: BookData) => (
+        <BookItem key={book.id} {...book} />
+      ))}
+    </div>
+  );
+}
+
+async function RecoBooks() {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/random`
+  );
+  if (!response.ok) {
+    return <div>failed to load recommended books</div>;
+  }
+  const recoBooks: BookData[] = await response.json();
+  return (
+    <div>
+      {recoBooks.map((book: BookData) => (
+        <BookItem key={book.id} {...book} />
+      ))}
+    </div>
+  );
+}
 
 export default function Home() {
   return (
     <div className={style.container}>
       <section>
         <h3>지금 추천하는 도서</h3>
-        {books.map((book) => (
-          <BookItem key={book.id} {...book} />
-        ))}
+        <RecoBooks />
       </section>
       <section>
-        <h3>등록된 모든 도서</h3>
-        {books.map((book) => (
-          <BookItem key={book.id} {...book} />
-        ))}
+        <h2>All Books</h2>
+        <AllBooks />
       </section>
     </div>
   );
