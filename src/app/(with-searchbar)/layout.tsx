@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+import { useState } from "react";
+import SearchBar from "./searchbar";
 
 export default function Layout({
   children,
@@ -7,7 +9,8 @@ export default function Layout({
 }>) {
   return (
     <div>
-      <div> search bar</div>
+      <SearchBar />
+
       <div>{children}</div>
     </div>
   );
