@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import SearchBar from "./searchbar";
+import SearchBar from "../../components/searchbar";
 
 export default function Layout({
   children,
