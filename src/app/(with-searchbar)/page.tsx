@@ -7,7 +7,7 @@ async function AllBooks() {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`,
     //default caching is no-store for SSR page
-    { cache: "no-store" }
+    { cache: "force-cache" }
   );
   if (!response.ok) {
     return <div>failed to load books</div>;

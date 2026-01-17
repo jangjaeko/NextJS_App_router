@@ -6,7 +6,8 @@ import { BookData } from "@/types";
 // request book api multple times in other pages but next call only one time because of request memoization
 async function Footer() {
   const response = await fetch(
-    process.env.NEXT_PUBLIC_API_SERVER_URL + "/book"
+    process.env.NEXT_PUBLIC_API_SERVER_URL + "/book",
+    { cache: "force-cache" } // prevent all pages not to be dynamic because of this fetch
   );
   if (!response.ok) {
     return <div>failed to load book count</div>;
