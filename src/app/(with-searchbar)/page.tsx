@@ -3,6 +3,13 @@ import style from "./page.module.css";
 import books from "@/mock/books.json";
 import { BookData } from "@/types";
 
+export const dynamic = "auto";
+// to force specific page to be dynamic or static
+// 1. auto - default behavior no forcing
+// 2. force-dynamic - forcing the page to be dynamic
+// 3. force-static - forcing the page to be static
+// 4. error - forcing the page to static but throw error when it can't be static
+
 async function AllBooks() {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`,

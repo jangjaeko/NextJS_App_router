@@ -3,6 +3,7 @@ import style from "./page.module.css";
 
 // export const dynamicParams = false;
 // if true, generateStaticParams can generate only some of the paths
+// route segment option
 
 export function generateStaticParams() {
   return [{ id: "1" }, { id: "2" }, { id: "3" }]; // only use string values
