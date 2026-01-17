@@ -5,7 +5,9 @@ import { BookData } from "@/types";
 
 async function AllBooks() {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`,
+    //default caching is no-store for SSR page
+    { cache: "no-store" }
   );
   if (!response.ok) {
     return <div>failed to load books</div>;
@@ -22,7 +24,9 @@ async function AllBooks() {
 
 async function RecoBooks() {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/random`
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/random`,
+    // { cache: "force-cache" }
+    { next: { revalidate: 3 } }
   );
   if (!response.ok) {
     return <div>failed to load recommended books</div>;
