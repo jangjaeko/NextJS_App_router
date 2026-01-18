@@ -2,6 +2,8 @@ import BookItem from "@/components/book-item";
 import style from "./page.module.css";
 import books from "@/mock/books.json";
 import { BookData } from "@/types";
+import { delay } from "@/util/delay";
+import { Suspense } from "react";
 
 // export const dynamic = "auto";
 // to force specific page to be dynamic or static
@@ -11,6 +13,7 @@ import { BookData } from "@/types";
 // 4. error - forcing the page to static but throw error when it can't be static
 
 async function AllBooks() {
+  await delay(1500); // simulate network delay
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`,
     //default caching is no-store for SSR page
@@ -30,6 +33,7 @@ async function AllBooks() {
 }
 
 async function RecoBooks() {
+  await delay(3000); // simulate network delay
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/random`,
     // { cache: "force-cache" }
@@ -48,16 +52,23 @@ async function RecoBooks() {
   );
 }
 
+export const dynamic = "force-dynamic"; // for using streaming UI with suspense
+// make loading sequentially using delay and suspense
 export default function Home() {
   return (
     <div className={style.container}>
       <section>
         <h3>지금 추천하는 도서</h3>
-        <RecoBooks />
+
+        <Suspense fallback={<div>Loading recommended books...</div>}>
+          <RecoBooks />
+        </Suspense>
       </section>
       <section>
         <h2>All Books</h2>
-        <AllBooks />
+        <Suspense fallback={<div>Loading all books...</div>}>
+          <AllBooks />
+        </Suspense>
       </section>
     </div>
   );
