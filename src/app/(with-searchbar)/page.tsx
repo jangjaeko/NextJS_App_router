@@ -3,7 +3,7 @@ import style from "./page.module.css";
 import books from "@/mock/books.json";
 import { BookData } from "@/types";
 
-export const dynamic = "auto";
+// export const dynamic = "auto";
 // to force specific page to be dynamic or static
 // 1. auto - default behavior no forcing
 // 2. force-dynamic - forcing the page to be dynamic
