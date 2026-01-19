@@ -1,9 +1,11 @@
 import BookItem from "@/components/book-item";
 import style from "./page.module.css";
-import books from "@/mock/books.json";
+// import books from "@/mock/books.json";
 import { BookData } from "@/types";
 import { delay } from "@/util/delay";
 import { Suspense } from "react";
+// import BookItemSkeleton from "@/components/skeleton/book-item-skeleton";
+import BookListSkeleton from "@/components/skeleton/book-list-skeleton";
 
 // export const dynamic = "auto";
 // to force specific page to be dynamic or static
@@ -60,13 +62,13 @@ export default function Home() {
       <section>
         <h3>지금 추천하는 도서</h3>
 
-        <Suspense fallback={<div>Loading recommended books...</div>}>
+        <Suspense fallback={<BookListSkeleton count={3} />}>
           <RecoBooks />
         </Suspense>
       </section>
       <section>
         <h2>All Books</h2>
-        <Suspense fallback={<div>Loading all books...</div>}>
+        <Suspense fallback={<BookListSkeleton count={5} />}>
           <AllBooks />
         </Suspense>
       </section>
