@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import style from "./page.module.css";
-import { createReviewAction } from "@/actions/create-review.action";
-
+import { ReviewData } from "@/types";
+import ReviewItem from "@/components/review-item";
+import ReviewEditor from "@/components/review-editor";
 // export const dynamicParams = false;
 // if true, generateStaticParams can generate only some of the paths
 // route segment option
@@ -40,36 +41,19 @@ async function Detail({ id }: { id: string }) {
   );
 }
 
-function ReviewEditor({ id }: { id?: string }) {
-  // async function createReviewAction(formData: FormData) {
-  //   "use server";
-  //   const content = formData.get("content")?.toString();
-  //   const author = formData.get("author")?.toString(); //author: FormDataEntryValue | null => string or file or null
-
-  //   if (!content || !author) {
-  //     return;
-  //   }
-  //   try {
-  //     const response = await fetch(
-  //       `${process.env.NEXT_PUBLIC_API_SERVER_URL}/review`,
-  //       {
-  //         method: "POST",
-  //         body: JSON.stringify({ bookId: id, content, author }),
-  //       },
-  //     );
-  //   } catch (error) {
-  //     console.error("Failed to create review:", error);
-  //   }
-  // }
-
+async function ReviewList({ bookId }: { bookId: string }) {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/review/book/${bookId}`,
+  );
+  if (!response.ok) {
+    throw new Error("Failed to fetch review list" + response.statusText);
+  }
+  const reviews: ReviewData[] = await response.json();
   return (
     <section>
-      <form action={createReviewAction}>
-        <input name="bookId" value={id} hidden readOnly />
-        <input required name="content" placeholder="review content" />
-        <input required name="author" placeholder="author" />
-        <button type="submit">Submit Review</button>
-      </form>
+      {reviews.map((review) => (
+        <ReviewItem key={review.id} {...review} />
+      ))}
     </section>
   );
 }
@@ -85,6 +69,7 @@ export default async function Page({
     <div className={style.container}>
       <Detail id={id} />
       <ReviewEditor id={id} />
+      <ReviewList bookId={id} />
     </div>
   );
 }
