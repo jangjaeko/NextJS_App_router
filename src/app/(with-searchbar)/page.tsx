@@ -19,7 +19,7 @@ async function AllBooks() {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`,
     //default caching is no-store for SSR page
-    { cache: "force-cache" }
+    // { cache: "force-cache" },
   );
   if (!response.ok) {
     return <div>failed to load books</div>;
@@ -39,7 +39,7 @@ async function RecoBooks() {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/random`,
     // { cache: "force-cache" }
-    { next: { revalidate: 3 } }
+    { next: { revalidate: 3 } },
   );
   if (!response.ok) {
     return <div>failed to load recommended books</div>;
