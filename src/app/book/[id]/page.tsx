@@ -44,6 +44,7 @@ async function Detail({ id }: { id: string }) {
 async function ReviewList({ bookId }: { bookId: string }) {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/review/book/${bookId}`,
+    { next: { tags: [`review-${bookId}`] } }, // for revalidate Tag example
   );
   if (!response.ok) {
     throw new Error("Failed to fetch review list" + response.statusText);
