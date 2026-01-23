@@ -6,6 +6,17 @@ import { delay } from "@/util/delay";
 import { Suspense } from "react";
 // import BookItemSkeleton from "@/components/skeleton/book-item-skeleton";
 import BookListSkeleton from "@/components/skeleton/book-list-skeleton";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Books store - Home",
+  description: "A book store built with Next.js App Router",
+  openGraph: {
+    title: "Books store - Home",
+    description: "A book store built with Next.js App Router",
+    images: ["/thumbnail.png"],
+  },
+};
 
 // export const dynamic = "auto";
 // to force specific page to be dynamic or static

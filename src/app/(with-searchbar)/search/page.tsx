@@ -3,11 +3,30 @@ import BookListSkeleton from "@/components/skeleton/book-list-skeleton";
 import { BookData } from "@/types";
 import { delay } from "@/util/delay";
 import { Suspense } from "react";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: { q?: string };
+}): Promise<Metadata> {
+  // generate dynamic metadata
+  const { q } = await searchParams;
+  return {
+    title: q ? `Search results for "${q}"` : "Books store -search",
+    description: "A book store built with Next.js App Router",
+    openGraph: {
+      title: q ? `Search results for "${q}"` : "Books store -search",
+      description: "A book store built with Next.js App Router",
+      images: ["/thumbnail.png"],
+    },
+  };
+}
 
 async function SearchResult({ q }: { q: string }) {
   await delay(1500); // simulate network delay
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/search?q=${q}`
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/search?q=${q}`,
     // { cache: "force-cache" }
   );
   if (!response.ok) {
