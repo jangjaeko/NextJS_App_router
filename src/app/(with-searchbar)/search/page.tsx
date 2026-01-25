@@ -8,7 +8,7 @@ import { Metadata } from "next";
 export async function generateMetadata({
   searchParams,
 }: {
-  searchParams: { q?: string };
+  searchParams: Promise<{ q?: string }>;
 }): Promise<Metadata> {
   // generate dynamic metadata
   const { q } = await searchParams;
@@ -24,7 +24,7 @@ export async function generateMetadata({
 }
 
 async function SearchResult({ q }: { q: string }) {
-  await delay(1500); // simulate network delay
+  // await delay(1500); // simulate network delay
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/search?q=${q}`,
     // { cache: "force-cache" }

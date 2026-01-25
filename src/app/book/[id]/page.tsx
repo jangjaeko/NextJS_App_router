@@ -35,8 +35,18 @@ export async function generateMetadata({
   };
 }
 
-export function generateStaticParams() {
-  return [{ id: "1" }, { id: "2" }, { id: "3" }]; // only use string values
+export async function generateStaticParams() {
+  // return [{ id: "1" }, { id: "2" }, { id: "3" }]; // only use string values
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`,
+  );
+  if (!response.ok) {
+    throw new Error("Failed to fetch book list" + response.statusText);
+  }
+  const books: BookData[] = await response.json();
+  return books.map((book) => ({
+    id: book.id.toString(),
+  }));
 }
 
 async function Detail({ id }: { id: string }) {
